@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{%block title %}
+    My Cart
+{% endblock %}
+
+{%block content %}
+    <h2 style="text-align: center;"> {{ current_user.name ~ ' ' ~ current_user.surname }}, these are the products currently in your cart! </h2>
+    <table id="modify-cart-table" class="table table-hover table-dark" style="margin: 10px 2% -10px auto; border:1px solid black;">
+        <thead>
+            <tr>
+                <!-- Columns HERE -->
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Product Code</th>
+                <th scope="col">Price</th>
+                <th scope="col">Date of Insertion</th>
+                <th scope="col">Seller Name/Surname</th>
+                <th scope="col">Category</th>
+                <th scope="col">Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Your rows inside the table HERE: -->
+            {% for cart_assoc_prod in current_user.cart.carts_prods %}
+                <tr>
+                    <td>{{ cart_assoc_prod.product.id }}</td>
+                    <td>{{ cart_assoc_prod.product.name }}</td>
+                    <td>{{ cart_assoc_prod.product.product_code }}</td>
+                    <td>{{ cart_assoc_prod.product.price }}$</td>
+                    <td>{{ cart_assoc_prod.date_of_insertion }}</td>
+                    <td>{{ cart_assoc_prod.product.user_seller.name ~ ' ' ~ cart_assoc_prod.product.user_seller.surname  }}</td>
+                    <td>{{ cart_assoc_prod.product.category }}</td>
+                    <td>
+                        <button class="btn btn-outline-danger delete-product-from-cart-button" prod_id="{{ cart_assoc_prod.product.id }}" cart_id="{{ cart_assoc_prod.cart_id }}">Remove Product from Cart</button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

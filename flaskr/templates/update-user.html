@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% block title %}
+Update User
+{% endblock %}
+
+{% block content %}
+<body class="text-center">
+    <div class="container" style="margin-top:50px;">
+        <form method="POST" class="form-update-user" style="color:white">
+            {{ form.hidden_tag() }}
+            <img class="mb-4" src="../static/eshop_logo.png" alt="">
+            <h1 class="h3 mb-3 font-weight-normal">
+                Update User...
+            </h1>
+            <br>
+            {{ form.name.label() }}
+            {{ form.name(class="form-control", value=user.name) }}
+
+            {{ form.surname.label() }}
+            {{ form.surname(class="form-control", value=user.surname) }}
+
+            {{ form.username.label() }}
+            {{ form.username(class="form-control", value=user.username) }}
+
+            {{ form.email.label() }}
+            {{ form.email(class="form-control", value=user.email) }}
+
+            {{ form.role.label() }}
+            {{ form.role(class="form-control") }}
+
+            <br>
+            {{ form.cancel(class="btn btn-danger btn-block btn-lg btn-primary") }}
+            {{ form.submit(class="btn btn-success btn-block btn-lg btn-primary") }}
+
+        </form>
+    </div>
+</body>
+{% endblock %}

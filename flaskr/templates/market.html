@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{%block title %}
+    Market
+{% endblock %}
+
+{%block content %}
+    <h1 style="text-align: center;"> Available Items in the Market </h1>
+    <table class="table table-hover table-dark" style="margin: 10px 2% -10px auto; border:1px solid black;">
+        <thead>
+            <tr>
+                <!-- Columns HERE -->
+                <th scope="col">Product Name:</th>
+                <th scope="col">Category:</th>
+                <th scope="col">Lowest price:</th>
+                <th scope="col">Highest price:</th>
+                <th scope="col">After than:</th>
+                <th scope="col">Before than:</th>
+                <th scope="col">Seller Name:</th>
+                <th scope="col">Seller Surname:</th>
+                <th scope="col"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <form method="POST" class="form-register" style="color:white">
+            {{ search_form.hidden_tag() }}
+            <td>
+                {{ search_form.product_name(class="form-control") }}
+            </td>
+            <td>
+                {{ search_form.category(class="form-control") }}
+            </td>
+            <td>
+                {{ search_form.lowest_price(class="form-control") }}
+            </td>
+            <td>
+                {{ search_form.highest_price(class="form-control") }}
+            </td>
+            <td>
+                {{ search_form.after_than_date(class="form-control") }}
+            </td>
+            <td>
+                {{ search_form.before_than_date(class="form-control") }}
+            </td>
+            <td>
+                {{ search_form.seller_name(class="form-control") }}
+            </td>
+            <td>
+                {{ search_form.seller_surname(class="form-control") }}
+            </td>
+            <td>
+                {{ search_form.submit(class="btn btn-success btn-block btn-lg btn-primary") }}
+            </td>
+            </form>
+        </tbody>
+</table>
+    <table id="all-products-table" class="table table-hover table-dark" style="margin: 10px 2% -10px auto; border:1px solid black;">
+        <thead>
+            <tr>
+                <!-- Columns HERE -->
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Product Code</th>
+                <th scope="col">Price</th>
+                <th scope="col">Date of Withdrawal</th>
+                <th scope="col">Seller Name/Surname</th>
+                <th scope="col">Category</th>
+                {% if current_user.role.value == "USER" %}
+                <th scope="col"></th>
+                {% endif %}
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Your rows inside the table HERE: -->
+            {% for prod in products %}
+                <tr>
+                    <td>{{ prod.id }}</td>
+                    <td>{{ prod.name }}</td>
+                    <td>{{ prod.product_code }}</td>
+                    <td>{{ prod.price }}$</td>
+                    <td>{{ prod.date_of_withdrawal }}</td>
+                    <td>{{ prod.user_seller.name ~ ' ' ~ prod.user_seller.surname  }}</td>
+                    <td>{{ prod.category }}</td>
+                    {% if current_user.role.value == "USER" %}
+                        {% if prod not in current_user_cart_prods %}
+                            <td>
+                                <button class="btn btn-outline-success btn-block add-product-to-cart" prod_id="{{ prod.id }}">Add Product to Cart</button>
+                            </td>
+                        {% endif %}
+                    {% endif %}
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

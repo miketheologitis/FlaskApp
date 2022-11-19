@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{%block title %}
+    Manage Users
+{% endblock %}
+
+{%block content %}
+
+
+    <h2 style="text-align: center;"> {{ current_user.name ~ ' ' ~ current_user.surname }}, as an admin you can modify all users/product-sellers/admins! </h2>
+    <h6 style="text-align: center;"> Info: If you change the role of a user you might consequently delete products/cart associated with the user. We preserve the integrity of the database.</h6>
+    <table id="modify-user-table" class="table table-hover table-dark" style="margin: 10px 2% -10px auto; border:1px solid black;">
+        <thead>
+            <tr>
+                <!-- Columns HERE -->
+                <th scope="col">ID</th>
+                <th scope="col">Name</th>
+                <th scope="col">Surname</th>
+                <th scope="col">Username</th>
+                <th scope="col">E-mail</th>
+                <th scope="col">Role</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Your rows inside the table HERE: -->
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.name }}</td>
+                    <td>{{ user.surname }}</td>
+                    <td> {{user.username }}</td>
+                    <td>{{ user.email }}</td>
+                    <td>{{ user.role.value }}</td>
+                    <td>
+                        {% if not user.confirmed %}
+                            <button class="btn btn-outline-success confirm-user-button" user_id="{{ user.id }}">Confirm User</button>
+                        {% endif %}
+                        <a href="{{ url_for('update_user_page', user_id=user.id) }}">
+                            <button class="btn btn-outline-info">Modify User</button>
+                        </a>
+                        <button class="btn btn-outline-danger delete-user-button" user_id="{{ user.id }}">Delete User</button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}

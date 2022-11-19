@@ -1,0 +1,14 @@
+{
+  "APP": {
+    "HOST": "127.0.0.1",
+    "PORT": 5000
+  },
+
+  "MYSQL": {
+    "USERNAME": "root",
+    "PASSWORD": "mixalis123",
+    "HOST": "localhost",
+    "PORT": 3306,
+    "DB": "flask_db"
+  }
+}
